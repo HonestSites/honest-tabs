@@ -18,6 +18,11 @@
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button class="btn btn-lg btn-primary" type="submit">
+            Register
+        </button>
     {{ form_end(registrationForm) }}
+    <form method="get" action="{{ path('app_login') }}">
+      <button class="btn btn-lg btn-secondary mt-3" type="submit">Login</button>
+    </form>
 {% endblock %}
