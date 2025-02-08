@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -25,6 +27,17 @@ class Category
     #[ORM\ManyToOne(inversedBy: 'categories')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Organization $organization = null;
+
+    /**
+     * @var Collection<int, LinkCollection>
+     */
+    #[ORM\OneToMany(targetEntity: LinkCollection::class, mappedBy: 'category')]
+    private Collection $linkCollections;
+
+    public function __construct()
+    {
+        $this->linkCollections = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,36 @@ class Category
     public function setOrganization(?Organization $organization): static
     {
         $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LinkCollection>
+     */
+    public function getLinkCollections(): Collection
+    {
+        return $this->linkCollections;
+    }
+
+    public function addLinkCollection(LinkCollection $linkCollection): static
+    {
+        if (!$this->linkCollections->contains($linkCollection)) {
+            $this->linkCollections->add($linkCollection);
+            $linkCollection->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLinkCollection(LinkCollection $linkCollection): static
+    {
+        if ($this->linkCollections->removeElement($linkCollection)) {
+            // set the owning side to null (unless already changed)
+            if ($linkCollection->getCategory() === $this) {
+                $linkCollection->setCategory(null);
+            }
+        }
 
         return $this;
     }
