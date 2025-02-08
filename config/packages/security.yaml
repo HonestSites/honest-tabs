@@ -38,6 +38,7 @@ security:
   access_control:
     - { path: ^/login }
     - { path: ^/reset-password }
+    - { path: ^/register }
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/, roles: ROLE_USER }
 
