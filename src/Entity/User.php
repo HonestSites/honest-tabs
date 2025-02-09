@@ -38,9 +38,16 @@
     #[ORM\Column]
     private bool $isVerified = false;
 
+    /**
+     * @var Collection<int, Organization>
+     */
+    #[ORM\OneToMany(targetEntity: Organization::class, mappedBy: 'owner')]
+    private Collection $organizations;
+
 
     public function __construct()
     {
+        $this->organizations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,5 +135,35 @@
       $this->isVerified = $isVerified;
 
       return $this;
+    }
+
+    /**
+     * @return Collection<int, Organization>
+     */
+    public function getOrganizations(): Collection
+    {
+        return $this->organizations;
+    }
+
+    public function addOrganization(Organization $organization): static
+    {
+        if (!$this->organizations->contains($organization)) {
+            $this->organizations->add($organization);
+            $organization->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganization(Organization $organization): static
+    {
+        if ($this->organizations->removeElement($organization)) {
+            // set the owning side to null (unless already changed)
+            if ($organization->getOwner() === $this) {
+                $organization->setOwner(null);
+            }
+        }
+
+        return $this;
     }
   }

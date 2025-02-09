@@ -38,7 +38,7 @@
       $form->handleRequest($request);
 
       if ($form->isSubmitted() && $form->isValid()) {
-        $organization->addOwner($this->authenticationManager->getUser());
+        $organization->setOwner($this->authenticationManager->getUser());
         $entityManager->persist($organization);
         $entityManager->flush();
 

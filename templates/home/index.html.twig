@@ -4,6 +4,9 @@
 
 {% block body %}
   <div>
-    {{ dump(organizations) }}
+    {% include "shared/_orgs.html.twig" %}
+  </div>
+  <div>
+    {% include "shared/_categories.html.twig" %}
   </div>
 {% endblock %}

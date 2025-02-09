@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+  <div class="container-xl">
+    <a class="navbar-brand" href="/">
+      <img src="{{ asset('build/images/hsLogo.png') }}" alt="Logo" width="150" class="d-inline-block align-text-top">
+    </a>
+    <div id="nav-section-switch" class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-end">
+      {% for org in organizations %}
+        {% set activeClass = org.id == activeOrg.id ? "active" : "" %}
+        <a class="btn btn-outline-success me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': org.id}) }}">
+          <span>{{ org.organizationName  }}</span>
+        </a>
+      {% endfor %}
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link py-3 " href="/logout"><i class="me-1 me-lg-2 bi bi-door-open"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

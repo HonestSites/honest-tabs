@@ -23,8 +23,11 @@
 
     public function getMyOrganizations($active = true): array
     {
-      $data = $this->findBy(['active' => $active, 'owner' => $this->authManager->getUser()]);
-      dd($data);
-      return $data;
+      return $this->findBy(['active' => $active, 'owner' => $this->authManager->getUser()], ['organizationName' => 'ASC']);
+    }
+
+    public function getMyOrganizationById($orgId)
+    {
+      return $this->findOneBy(['id' => $orgId, 'owner' => $this->authManager->getUser()]);
     }
   }

@@ -30,6 +30,10 @@ class Organization
     #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'organization')]
     private Collection $categories;
 
+    #[ORM\ManyToOne(inversedBy: 'organizations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
+
 
     public function __construct()
     {
@@ -103,6 +107,18 @@ class Organization
                 $category->setOrganization(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }
