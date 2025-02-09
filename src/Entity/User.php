@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -35,6 +37,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    /**
+     * @var Collection<int, Organization>
+     */
+    #[ORM\ManyToMany(targetEntity: Organization::class, mappedBy: 'owner')]
+    private Collection $organizations;
+
+    public function __construct()
+    {
+        $this->organizations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +132,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Organization>
+     */
+    public function getOrganizations(): Collection
+    {
+        return $this->organizations;
+    }
+
+    public function addOrganization(Organization $organization): static
+    {
+        if (!$this->organizations->contains($organization)) {
+            $this->organizations->add($organization);
+            $organization->addOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganization(Organization $organization): static
+    {
+        if ($this->organizations->removeElement($organization)) {
+            $organization->removeOwner($this);
+        }
 
         return $this;
     }
