@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% import getPath(_self) ~ "/_variables.twig" as globalData %}
+
+{% block title %}{{ globalData.areaName }} - {{ organization.organizationName }}{% endblock %}
+
+{% block body %}
+  {% set recordId = organization.id %}
+  <div class="container-xl mt-5">
+    <div class="row">
+      <div class="col pt-5">
+        <h1 class="h3">{{ organization.organizationName }}</h1>
+
+        <table class="table">
+          <tbody>
+          <tr>
+            <th>Organization Name</th>
+            <td>{{ organization.organizationName }}</td>
+          </tr>
+          <tr>
+            <th>Active</th>
+            <td>{{ organization.active ? 'Yes' : 'No' }}</td>
+          </tr>
+          <tr>
+            <th>Allow Sharing</th>
+            <td>{{ organization.allowSharing ? 'Yes' : 'No' }}</td>
+          </tr>
+          </tbody>
+        </table>
+
+        {% include 'common/_back_link.html.twig' with {'pathName': globalData.backPathName, 'areaName': globalData.areaName } %}
+        {% include 'common/_edit_link.html.twig' with {'pathName': globalData.editPathName, 'recordId':recordId, 'areaName': globalData.areaName } %}
+        {% include 'common/_delete_link.html.twig' with {'pathName': globalData.deletePathName, 'recordId':recordId, 'areaName': globalData.areaName } %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

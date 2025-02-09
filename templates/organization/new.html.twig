@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% import getPath(_self) ~ "/_variables.twig" as globalData %}
+
+{% block title %}Create {{ globalData.areaName }}{% endblock %}
+
+{% block body %}
+  <div class="container-xl mt-5">
+    <div class="row">
+      <div class="col pt-5">
+        <h1 class="h3">Create {{ globalData.areaName }}</h1>
+        {{ include(getPath(_self) ~ "/_form.html.twig") }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% import getPath(_self) ~ "/_variables.twig" as globalData %}
+
+{% block title %}{{ globalData.areaName }}{% endblock %}
+
+{% block body %}
+  <div class="container-xl mt-5">
+    <div class="row">
+      <div class="col pt-5">
+        <h1 class="h3">{{ globalData.areaName }}s</h1>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Organization Name</th>
+            <th>Active</th>
+            <th>Allow Sharing</th>
+            <th>actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for row in organizations %}
+            {% set recordId = row.id %}
+            <tr>
+              <td>{{ row.organizationName }}</td>
+              <td>{{ row.active ? 'Yes' : 'No' }}</td>
+              <td>{{ row.allowSharing ? 'Yes' : 'No' }}</td>
+              <td>
+                {% include 'common/_show_link.html.twig' with {'pathName': globalData.showPathName, 'recordId': recordId, 'areaName': globalData.areaName } %}
+                {% include 'common/_edit_link.html.twig' with {'pathName': globalData.editPathName, 'recordId':recordId, 'areaName': globalData.areaName } %}
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="5">no records found</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% include 'common/_new_link.html.twig' with {'pathName': globalData.newPathName, 'areaName': globalData.areaName } %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

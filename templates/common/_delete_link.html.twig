@@ -1,0 +1,9 @@
+{% if recordId %}
+  <span class="float-end">
+    <form method="post" action="{{ path(pathName, {'id': recordId}) }}"
+          onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recordId) }}">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+  </span>
+{% endif %}
