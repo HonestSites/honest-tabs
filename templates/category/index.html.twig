@@ -12,17 +12,17 @@
         <table class="table">
           <thead>
           <tr>
-            <th>Organization Name</th>
+            <th>Category Name</th>
             <th>Active</th>
             <th>Allow Sharing</th>
             <th>actions</th>
           </tr>
           </thead>
           <tbody>
-          {% for row in organizations %}
+          {% for row in categories %}
             {% set recordId = row.id %}
             <tr>
-              <td>{{ row.organizationName }}</td>
+              <td>{{ row.categoryName }}</td>
               <td>{{ row.active ? 'Yes' : 'No' }}</td>
               <td>{{ row.allowSharing ? 'Yes' : 'No' }}</td>
               <td>
