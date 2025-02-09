@@ -30,16 +30,10 @@ class Organization
     #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'organization')]
     private Collection $categories;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'organizations')]
-    private Collection $owner;
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->owner = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,30 +103,6 @@ class Organization
                 $category->setOrganization(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getOwner(): Collection
-    {
-        return $this->owner;
-    }
-
-    public function addOwner(User $owner): static
-    {
-        if (!$this->owner->contains($owner)) {
-            $this->owner->add($owner);
-        }
-
-        return $this;
-    }
-
-    public function removeOwner(User $owner): static
-    {
-        $this->owner->removeElement($owner);
 
         return $this;
     }
