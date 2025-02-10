@@ -52,13 +52,12 @@
 
       return $this->render("category/{$template}", [
         'category' => $category,
-        'form' => $form,
         'isHttpRequest' => (bool)$request->isXmlHttpRequest(),
+        'form' => $form->createView(),
       ], new Response(
         null,
         $form->isSubmitted() ? 422 : 200
       ));
-
     }
 
     #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]

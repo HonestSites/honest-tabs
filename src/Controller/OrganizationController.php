@@ -54,7 +54,10 @@
         'organization' => $organization,
         'form' => $form,
         'isHttpRequest' => (bool) $request->isXmlHttpRequest(),
-      ]);
+      ], new Response(
+        null,
+        $form->isSubmitted() ? 422 : 200
+      ));
     }
 
     #[Route('/{id}', name: 'app_organization_show', methods: ['GET'])]
@@ -73,14 +76,19 @@
 
       if ($form->isSubmitted() && $form->isValid()) {
         $entityManager->flush();
-
+        if($request->isXmlHttpRequest()) {
+          return new Response(null, 204);
+        }
         return $this->redirectToRoute('app_organization_index', [], Response::HTTP_SEE_OTHER);
       }
 
       return $this->render('organization/edit.html.twig', [
         'organization' => $organization,
         'form' => $form,
-      ]);
+      ], new Response(
+        null,
+        $form->isSubmitted() ? 422 : 200
+      ));
     }
 
     #[Route('/{id}', name: 'app_organization_delete', methods: ['POST'])]

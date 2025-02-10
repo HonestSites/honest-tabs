@@ -7,10 +7,12 @@ export default class extends Controller {
     formUrl: String,
   };
 
+  modal = null;
+
   async openModal(event) {
     this.modalBodyTarget.innerHTML = 'Loading...';
-    const modal = new Modal(this.modalTarget);
-    modal.show();
+    this.modal = new Modal(this.modalTarget);
+    this.modal.show();
     this.modalBodyTarget.innerHTML = await $.ajax(this.formUrlValue);
   }
 
@@ -24,9 +26,13 @@ export default class extends Controller {
         method: $form.prop('method'),
         data: $form.serialize(),
       });
-      console.log('success');
+      this.modal.hide();
     } catch (e) {
       this.modalBodyTarget.innerHTML = e.responseText;
     }
+  }
+
+  modalHidden() {
+    location.reload();
   }
 }

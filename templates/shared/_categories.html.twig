@@ -10,7 +10,10 @@
           <span>{{ cat.categoryName  }}</span>
         </a>
       {% endfor %}
-      <div {{ stimulus_controller('modal-form', {formUrl: path('app_category_new', {'orgId': activeOrg.id})}) }}>
+      <div
+        {{ stimulus_controller('modal-form', {formUrl: path('app_category_new', {'orgId': activeOrg.id})}) }}
+        data-action="hidden.bs.modal->modal-form#modalHidden"
+      >
         <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW CATEGORY</button>
         {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Category'}) }}
       </div>
