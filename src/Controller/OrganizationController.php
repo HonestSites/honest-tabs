@@ -23,9 +23,10 @@
     }
 
     #[Route(name: 'app_organization_index', methods: ['GET'])]
-    public function index(OrganizationRepository $organizationRepository): Response
+    public function index(Request $request, OrganizationRepository $organizationRepository): Response
     {
-      return $this->render('organization/index.html.twig', [
+
+      return $this->render("organization/index.html.twig", [
         'organizations' => $organizationRepository->findAll(),
       ]);
     }
@@ -45,9 +46,12 @@
         return $this->redirectToRoute('app_organization_index', [], Response::HTTP_SEE_OTHER);
       }
 
-      return $this->render('organization/new.html.twig', [
+      $template = $request->isXmlHttpRequest() ? '_form.html.twig' : 'new.html.twig';
+
+      return $this->render("organization/{$template}", [
         'organization' => $organization,
         'form' => $form,
+        'isHttpRequest' => (bool) $request->isXmlHttpRequest(),
       ]);
     }
 

@@ -10,9 +10,10 @@
           <span>{{ org.organizationName  }}</span>
         </a>
       {% endfor %}
-      <a class="btn btn-outline-danger me-2" href="{{ path('app_organization_new') }}">
-        <span>NEW ORG</span>
-      </a>
+      <div {{ stimulus_controller('modal-form', {formUrl: path('app_organization_new')}) }}>
+        <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW ORG</button>
+        {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Organization'}) }}
+      </div>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
