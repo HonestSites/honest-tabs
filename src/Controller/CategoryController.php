@@ -42,6 +42,9 @@
         $entityManager->persist($category);
         $entityManager->flush();
 
+        if($request->isXmlHttpRequest()) {
+          return new Response(null, 204);
+        }
         return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
       }
 
@@ -51,7 +54,10 @@
         'category' => $category,
         'form' => $form,
         'isHttpRequest' => (bool)$request->isXmlHttpRequest(),
-      ]);
+      ], new Response(
+        null,
+        $form->isSubmitted() ? 422 : 200
+      ));
 
     }
 

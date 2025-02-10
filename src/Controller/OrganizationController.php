@@ -42,7 +42,9 @@
         $organization->setOwner($this->authenticationManager->getUser());
         $entityManager->persist($organization);
         $entityManager->flush();
-
+        if($request->isXmlHttpRequest()) {
+          return new Response(null, 204);
+        }
         return $this->redirectToRoute('app_organization_index', [], Response::HTTP_SEE_OTHER);
       }
 

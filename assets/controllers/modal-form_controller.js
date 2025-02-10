@@ -13,4 +13,20 @@ export default class extends Controller {
     modal.show();
     this.modalBodyTarget.innerHTML = await $.ajax(this.formUrlValue);
   }
+
+  async submitForm(event) {
+    event.preventDefault();
+    const $form = $(this.modalBodyTarget).find('form');
+
+    try {
+      await $.ajax({
+        url: this.formUrlValue,
+        method: $form.prop('method'),
+        data: $form.serialize(),
+      });
+      console.log('success');
+    } catch (e) {
+      this.modalBodyTarget.innerHTML = e.responseText;
+    }
+  }
 }
