@@ -1,15 +1,16 @@
+{% if activeOrg %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
   <div class="container-xl">
     <div id="nav-section-switch" class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-end">
-      {% for cat in activeOrg.categories %}
-        {% if not activeCatId %}
-          {% set activeCatId = cat.id %}
-        {% endif %}
-        {% set activeClass = cat.id == activeCatId ? "active" : "" %}
-        <a class="btn btn-outline-info me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrg.id, 'catId': cat.id}) }}">
-          <span>{{ cat.categoryName  }}</span>
-        </a>
-      {% endfor %}
+        {% for cat in activeOrg.categories %}
+          {% if not activeCatId %}
+            {% set activeCatId = cat.id %}
+          {% endif %}
+          {% set activeClass = cat.id == activeCatId ? "active" : "" %}
+          <a class="btn btn-outline-info me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrg.id, 'catId': cat.id}) }}">
+            <span>{{ cat.categoryName  }}</span>
+          </a>
+        {% endfor %}
       <div
         {{ stimulus_controller('modal-form', {formUrl: path('app_category_new', {'orgId': activeOrg.id})}) }}
         data-action="hidden.bs.modal->modal-form#modalHidden"
@@ -20,3 +21,4 @@
     </div>
   </div>
 </nav>
+{% endif %}
