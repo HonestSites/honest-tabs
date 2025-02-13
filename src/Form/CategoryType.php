@@ -23,7 +23,7 @@
           'choice_label' => 'organizationName',
         ])
         ->add('active', null, [
-          'attr' => ['class' => 'form-check-input'],
+          'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
         ])
         ->add('allow_sharing', null, [
           'attr' => ['class' => 'form-check-input'],
