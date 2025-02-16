@@ -1,19 +1,19 @@
-{% if activeOrg and activeCategory %}
+{% if activeOrg and activeCategory and activeCollection %}
   <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
     <div class="container-xl">
       <div id="nav-section-switch" class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-end">
-        {% for link in activeCollection.linkCollections %}
-          {% set activeClass = collection.id == activeCollectionId ? "active" : "" %}
+        {% for link in activeCollection.link %}
+          {% set activeClass = link.id == activeCollectionId ? "active" : "" %}
           <a class="btn btn-outline-info me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': collection.id}) }}">
             <span>{{ collection.collectionName  }}</span>
           </a>
         {% endfor %}
         <div
-                {{ stimulus_controller('modal-form', {formUrl: path('app_collection_new', {'orgId': activeOrgId, 'catId': activeCatId})}) }}
+                {{ stimulus_controller('modal-form', {formUrl: path('app_link_new', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': activeCollectionId})}) }}
                 data-action="hidden.bs.modal->modal-form#modalHidden"
         >
-          <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Collection</button>
-          {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Collection'}) }}
+          <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Link</button>
+          {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Link'}) }}
         </div>
       </div>
     </div>

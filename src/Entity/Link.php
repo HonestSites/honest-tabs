@@ -32,6 +32,9 @@ class Link
     #[ORM\Column(nullable: true)]
     private ?bool $allowSharing = null;
 
+    #[ORM\ManyToOne(inversedBy: 'link')]
+    private ?LinkCollection $linkCollection = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Link
     public function setAllowSharing(?bool $allowSharing): static
     {
         $this->allowSharing = $allowSharing;
+
+        return $this;
+    }
+
+    public function getLinkCollection(): ?LinkCollection
+    {
+        return $this->linkCollection;
+    }
+
+    public function setLinkCollection(?LinkCollection $linkCollection): static
+    {
+        $this->linkCollection = $linkCollection;
 
         return $this;
     }

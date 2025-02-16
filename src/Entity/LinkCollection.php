@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LinkCollectionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LinkCollectionRepository::class)]
@@ -25,6 +27,17 @@ class LinkCollection
     #[ORM\ManyToOne(inversedBy: 'linkCollections')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    /**
+     * @var Collection<int, Link>
+     */
+    #[ORM\OneToMany(targetEntity: Link::class, mappedBy: 'linkCollection')]
+    private Collection $link;
+
+    public function __construct()
+    {
+        $this->link = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,36 @@ class LinkCollection
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Link>
+     */
+    public function getLink(): Collection
+    {
+        return $this->link;
+    }
+
+    public function addLink(Link $link): static
+    {
+        if (!$this->link->contains($link)) {
+            $this->link->add($link);
+            $link->setLinkCollection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLink(Link $link): static
+    {
+        if ($this->link->removeElement($link)) {
+            // set the owning side to null (unless already changed)
+            if ($link->getLinkCollection() === $this) {
+                $link->setLinkCollection(null);
+            }
+        }
 
         return $this;
     }
