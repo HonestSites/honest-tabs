@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Link{% endblock %}
+
+{% block body %}
+    <h1>Link</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ link.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ link.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ link.description }}</td>
+            </tr>
+            <tr>
+                <th>BaseUrl</th>
+                <td>{{ link.baseUrl }}</td>
+            </tr>
+            <tr>
+                <th>Uri</th>
+                <td>{{ link.uri }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ link.active ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>AllowSharing</th>
+                <td>{{ link.allowSharing ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_link_index') }}">back to list</a>
+
+    <a href="{{ path('app_link_edit', {'id': link.id}) }}">edit</a>
+
+    {{ include('link/_delete_form.html.twig') }}
+{% endblock %}
