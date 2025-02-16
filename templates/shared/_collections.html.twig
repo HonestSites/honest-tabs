@@ -5,7 +5,7 @@
         {% for collection in activeCategory.linkCollections %}
           {% set activeClass = collection.id == activeCollectionId ? "active" : "" %}
           <a class="btn btn-outline-info me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': collection.id}) }}">
-            <span>{{ cat.categoryName  }}</span>
+            <span>{{ collection.collectionName  }}</span>
           </a>
         {% endfor %}
         <div
