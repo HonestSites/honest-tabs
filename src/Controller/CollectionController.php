@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\LinkCollection;
 use App\Form\LinkCollectionType;
+use App\Repository\CategoryRepository;
 use App\Repository\LinkCollectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,9 +24,15 @@ final class CollectionController extends AbstractController
   }
 
   #[Route('/new', name: 'app_collection_new', methods: ['GET', 'POST'])]
-  public function new(Request $request, EntityManagerInterface $entityManager): Response
+  public function new(Request $request, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
   {
     $linkCollection = new LinkCollection();
+
+    $categoryId = $request->query->get('catId');
+    $category = $categoryId ? $categoryRepository->findOneById($categoryId) : null;
+    $linkCollection->setCategory($category);
+
+
     $form = $this->createForm(LinkCollectionType::class, $linkCollection);
     $form->handleRequest($request);
 

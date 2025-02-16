@@ -23,10 +23,10 @@
           'choice_label' => 'categoryName',
         ])
         ->add('active', null, [
-          'attr' => ['class' => 'form-check-input'],
+          'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
         ])
         ->add('allowSharing', null, [
-          'attr' => ['class' => 'form-check-input'],
+          'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
         ]);
     }
 

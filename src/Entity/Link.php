@@ -23,9 +23,6 @@ class Link
     #[ORM\Column(length: 255)]
     private ?string $baseUrl = null;
 
-    #[ORM\Column(length: 400)]
-    private ?string $uri = null;
-
     #[ORM\Column(nullable: true)]
     private ?bool $active = null;
 
@@ -72,18 +69,6 @@ class Link
     public function setBaseUrl(string $baseUrl): static
     {
         $this->baseUrl = $baseUrl;
-
-        return $this;
-    }
-
-    public function getUri(): ?string
-    {
-        return $this->uri;
-    }
-
-    public function setUri(string $uri): static
-    {
-        $this->uri = $uri;
 
         return $this;
     }

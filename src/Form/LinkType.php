@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Link;
 use App\Entity\LinkCollection;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,26 +13,46 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LinkType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('title')
-            ->add('description')
-            ->add('baseUrl')
-            ->add('uri')
-            ->add('active')
-            ->add('allowSharing')
-            ->add('linkCollection', EntityType::class, [
-                'class' => LinkCollection::class,
-                'choice_label' => 'id',
-            ])
-        ;
-    }
+  public function buildForm(FormBuilderInterface $builder, array $options): void
+  {
+    $collectionData = $options['data']->getLinkCollection();
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Link::class,
-        ]);
-    }
+    $builder
+      ->add('title', null, [
+        'attr' => ['class' => 'form-control'],
+      ])
+      ->add('description', null, [
+        'attr' => ['class' => 'form-control'],
+      ])
+      ->add('baseUrl', null, [
+        'attr' => ['class' => 'form-control'],
+        'label' => 'URL',
+      ])
+      ->add('active', null, [
+        'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
+      ])
+      ->add('allowSharing', null, [
+        'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
+      ])
+      ->add('linkCollection', EntityType::class, [
+        'attr' => ['class' => 'form-control'],
+        'class' => LinkCollection::class,
+        'choice_label' => 'collectionName',
+        'query_builder' => function (EntityRepository $er) use ($collectionData): QueryBuilder {
+          return $er->createQueryBuilder('lc')
+            ->where('lc.active = :active')
+            ->andWhere('lc.id = :collectionId')
+            ->setParameter('active', true)
+            ->setParameter('collectionId', $collectionData ? $collectionData->getId() : null)
+            ->orderBy('lc.collectionName', 'ASC');
+        },
+      ]);
+  }
+
+  public function configureOptions(OptionsResolver $resolver): void
+  {
+    $resolver->setDefaults([
+      'data_class' => Link::class,
+    ]);
+  }
 }

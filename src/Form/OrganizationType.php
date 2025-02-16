@@ -19,7 +19,7 @@ class OrganizationType extends AbstractType
         'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
       ])
       ->add('allowSharing', null, [
-        'attr' => ['class' => 'form-check-input'],
+        'attr' => ['class' => 'form-check-input', 'checked' => 'checked'],
       ]);
   }
 

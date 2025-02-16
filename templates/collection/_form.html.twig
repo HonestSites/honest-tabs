@@ -2,7 +2,9 @@
 {% set recordId = linkCollections.id %}
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn my-3 btn-success">{{ button_label|default('Save') }}</button>
+    {% if not isHttpRequest %}
+        <button class="btn my-3 btn-success">{{ button_label|default('Save') }}</button>
+    {% endif %}
 {{ form_end(form) }}
 {% if not isHttpRequest %}
     {% include 'common/_back_link.html.twig' with {'pathName': globalData.backPathName, 'areaName': globalData.areaName } %}

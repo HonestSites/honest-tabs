@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
+{% import getPath(_self) ~ "/_variables.twig" as globalData %}
 
-{% block title %}Edit Link{% endblock %}
+{% block title %}Edit {{ globalData.areaName }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Link</h1>
-
-    {{ include('link/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_link_index') }}">back to list</a>
-
-    {{ include('link/_delete_form.html.twig') }}
+    <div class="container-xl mt-5">
+        <div class="row">
+            <div class="col pt-5">
+                <h1 class="h3">Edit {{ globalData.areaName }}</h1>
+                {{ include(getPath(_self) ~ "/_form.html.twig") }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
