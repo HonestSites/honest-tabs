@@ -1,25 +1,24 @@
 {% if activeOrg %}
-  <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-    <div class="container-xl">
-      <div id="nav-section-switch" class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-end">
-        <div class="row">
-          {% for cat in activeOrg.categories %}
-            {% set activeClass = cat.id == activeCatId ? "active" : "" %}
-            <div class="col">
-              <a class="btn btn-outline-info me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrgId, 'catId': cat.id}) }}">
-                <span>{{ cat.categoryName  }}</span>
-              </a>
-            </div>
-          {% endfor %}
-        </div>
-        <div
-          {{ stimulus_controller('modal-form', {formUrl: path('app_category_new', {'orgId': activeOrgId})}) }}
-          data-action="hidden.bs.modal->modal-form#modalHidden"
-        >
-          <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW CATEGORY</button>
-          {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Category'}) }}
+  <div class="align-items-end">
+    <div
+        {{ stimulus_controller('modal-form', {formUrl: path('app_category_new', {'orgId': activeOrgId})}) }}
+        data-action="hidden.bs.modal->modal-form#modalHidden"
+    >
+      <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW CATEGORY</button>
+      {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Category'}) }}
+    </div>
+
+
+    {% for cat in activeOrg.categories %}
+      {% set activeClass = cat.id == activeCatId ? "active" : "" %}
+      <div class="row mt-3">
+        <div class="col">
+          <a class="btn btn-outline-info me-2 {{ activeClass }}"
+             href="{{ path('app_home', {'orgId': activeOrgId, 'catId': cat.id}) }}">
+            <span>{{ cat.categoryName }}</span>
+          </a>
         </div>
       </div>
-    </div>
-  </nav>
+    {% endfor %}
+  </div>
 {% endif %}

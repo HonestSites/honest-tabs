@@ -1,23 +1,19 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-  <div class="container-xl">
-    <div id="nav-section-switch" class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-end">
-      <div class="row">
-      {% for org in organizations %}
-        {% set activeClass = org.id == activeOrgId ? "active" : "" %}
+<div class="align-items-end">
+  <div {{ stimulus_controller('modal-form', {formUrl: path('app_organization_new')}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
+    <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW ORG</button>
+    {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Organization'}) }}
+  </div>
+
+  <div class="row">
+    {% for org in organizations %}
+      {% set activeClass = org.id == activeOrgId ? "active" : "" %}
+      <div class="row mt-3">
         <div class="col">
           <a class="btn btn-outline-success me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': org.id}) }}">
-            <span>{{ org.organizationName  }}</span>
+            <span>{{org.organizationName}}</span>
           </a>
         </div>
-      {% endfor %}
       </div>
-      <div
-        {{ stimulus_controller('modal-form', {formUrl: path('app_organization_new')}) }}
-        data-action="hidden.bs.modal->modal-form#modalHidden"
-      >
-        <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW ORG</button>
-        {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Organization'}) }}
-      </div>
-    </div>
+    {% endfor %}
   </div>
-</nav>
+</div>

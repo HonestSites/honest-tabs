@@ -3,16 +3,18 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-  <div>
-    {% include "shared/_orgs.html.twig" %}
-  </div>
-  <div>
-    {% include "shared/_categories.html.twig" %}
-  </div>
-  <div>
-    {% include "shared/_collections.html.twig" %}
-  </div>
-  <div>
-    {% include "shared/_links.html.twig" %}
+  <div class="row">
+    <div class="col-2">
+      {% include "shared/_orgs.html.twig" %}
+    </div>
+    <div class="col-1">
+      {% include "shared/_categories.html.twig" %}
+    </div>
+    <div class="col-1">
+      {% include "shared/_collections.html.twig" %}
+    </div>
+    <div class="col">
+      {% include "shared/_links.html.twig" %}
+    </div>
   </div>
 {% endblock %}
