@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand bg-body-tertiary shadow">
+  <div class="container">
+    <div class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-start overflow-x-auto">
+      <div {{ stimulus_controller('modal-form', {formUrl: path('app_organization_new')}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
+        <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW ORG</button>
+        {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Organization'}) }}
+      </div>
+      {% for org in organizations %}
+        {% set activeClass = org.id == activeOrgId ? "active" : "" %}
+        <a class="btn btn-outline-success btn-sm {{ activeClass }}" href="{{ path('app_home', {'orgId': org.id}) }}">
+          {{ org.organizationName }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</nav>

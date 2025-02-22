@@ -1,20 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Honest Sites Book Mark Management{% endblock %}
 
 {% block body %}
-  <div class="row">
-    <div class="col-2">
-      {% include "shared/_orgs.html.twig" %}
-    </div>
-    <div class="col-1">
-      {% include "shared/_categories.html.twig" %}
-    </div>
-    <div class="col-1">
-      {% include "shared/_collections.html.twig" %}
-    </div>
-    <div class="col">
-      {% include "shared/_links.html.twig" %}
-    </div>
+  <div>
+    {% include "shared/_orgs_horizontal.html.twig" %}
+  </div>
+  <div>
+    {% include "shared/_categories_horizontal.html.twig" %}
+  </div>
+  <div>
+    {% include "shared/_collections_horizontal.html.twig" %}
+  </div>
+  <div>
+    {% include "shared/_links.html.twig" %}
   </div>
 {% endblock %}
