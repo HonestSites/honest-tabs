@@ -32,11 +32,15 @@ class Link
     #[ORM\ManyToOne(inversedBy: 'link')]
     private ?LinkCollection $linkCollection = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $siteUsername = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    
+    #[ORM\Column(length: 1024, nullable: true)]
     private ?string $sitePassword = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private ?array $encData = null;
+
 
     public function getId(): ?int
     {
@@ -138,4 +142,17 @@ class Link
 
         return $this;
     }
+
+    public function getEncData(): ?array
+    {
+        return $this->encData;
+    }
+
+    public function setEncData(?array $encData): static
+    {
+        $this->encData = $encData;
+
+        return $this;
+    }
+
 }
