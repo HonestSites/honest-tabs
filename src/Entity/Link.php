@@ -32,6 +32,12 @@ class Link
     #[ORM\ManyToOne(inversedBy: 'link')]
     private ?LinkCollection $linkCollection = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $siteUsername = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $sitePassword = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +111,30 @@ class Link
     public function setLinkCollection(?LinkCollection $linkCollection): static
     {
         $this->linkCollection = $linkCollection;
+
+        return $this;
+    }
+
+    public function getSiteUsername(): ?string
+    {
+        return $this->siteUsername;
+    }
+
+    public function setSiteUsername(?string $siteUsername): static
+    {
+        $this->siteUsername = $siteUsername;
+
+        return $this;
+    }
+
+    public function getSitePassword(): ?string
+    {
+        return $this->sitePassword;
+    }
+
+    public function setSitePassword(?string $sitePassword): static
+    {
+        $this->sitePassword = $sitePassword;
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Entity\Link;
 use App\Form\LinkType;
 use App\Repository\LinkCollectionRepository;
 use App\Repository\LinkRepository;
+use App\Service\PasswordManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ final class LinkController extends AbstractController
   }
 
   #[Route('/new', name: 'app_link_new', methods: ['GET', 'POST'])]
-  public function new(Request $request, EntityManagerInterface $entityManager, LinkCollectionRepository $linkCollectionRepository): Response
+  public function new(Request $request, EntityManagerInterface $entityManager, LinkCollectionRepository $linkCollectionRepository, PasswordManager $passwordManager): Response
   {
     $link = new Link();
 
@@ -37,6 +38,8 @@ final class LinkController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      $hashedPass = $passwordManager->hashNonUserPassword($link, $link->getSitePassword());
+      $link->setSitePassword($hashedPass);
       $entityManager->persist($link);
       $entityManager->flush();
 
