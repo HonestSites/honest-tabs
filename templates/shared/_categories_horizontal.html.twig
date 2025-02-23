@@ -1,6 +1,6 @@
 {% if activeOrg %}
 <nav class="navbar navbar-expand bg-body-tertiary shadow">
-  <div class="container">
+  <div class="container-fluid">
     <div class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-start overflow-x-auto">
       <div {{ stimulus_controller('modal-form', {formUrl: path('app_category_new', {'orgId': activeOrgId})}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
         <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW CATEGORY</button>
