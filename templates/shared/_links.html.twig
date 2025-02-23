@@ -1,4 +1,20 @@
 {% if activeOrg and activeCategory and activeCollection %}
+  <script type="text/javascript">
+    function showPass(linkId) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            let eleId = "pass-" + linkId;
+            document.getElementById(eleId).innerHTML = `${this.responseText}<br /><a href="javascript:void(0);" onclick="hidePass(${linkId});">hide</a>`;
+        }
+        xhttp.open("GET", `/link/${linkId}/getLinkPass`, true);
+        xhttp.send();
+    }
+
+    function hidePass(linkId) {
+      let eleId = "pass-" + linkId;
+      document.getElementById(eleId).innerHTML = `<a href="javascript:void(0);" onclick="showPass(${linkId});">show</a>`;
+    }
+  </script>
   <div class="align-items-end">
     <div {{ stimulus_controller('modal-form', {formUrl: path('app_link_new', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': activeCollectionId })}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
       <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Link</button>
@@ -12,6 +28,12 @@
             <div class="card-body">
               <h5 class="card-title">{{ link.Title  }}</h5>
               <p class="card-text">{{ link.description }}</p>
+              <p class="card-text">{{ link.siteUsername }}</p>
+              <p class="card-text" id="pass-{{ link.id }}">
+                {% if link.encData %}
+                  <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show</a>
+                {% endif %}
+              </p>
               <a href="{{ link.baseUrl }}" class="btn btn-primary" target="_blank">GO!</a>
             </div>
           </div>

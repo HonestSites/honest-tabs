@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -46,7 +48,14 @@ class LinkType extends AbstractType
             ->setParameter('collectionId', $collectionData ? $collectionData->getId() : null)
             ->orderBy('lc.collectionName', 'ASC');
         },
-      ]);
+      ])
+      ->add('siteUsername', TextType::class, [
+        'attr' => ['class' => 'form-control'],
+      ])
+      ->add('sitePassword', PasswordType::class, [
+        'attr' => ['class' => 'form-control'],
+      ])
+    ;
   }
 
   public function configureOptions(OptionsResolver $resolver): void
