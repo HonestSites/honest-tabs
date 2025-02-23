@@ -1,25 +1,19 @@
 {% if activeOrg and activeCategory %}
-  <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-    <div class="container-xl">
-      <div id="nav-section-switch" class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-end">
-        <div class="row">
-          {% for collection in activeCategory.linkCollections %}
-            {% set activeClass = collection.id == activeCollectionId ? "active" : "" %}
-            <div class="col">
-              <a class="btn btn-outline-info me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': collection.id}) }}">
-                <span>{{ collection.collectionName  }}</span>
-              </a>
-            </div>
-          {% endfor %}
-        </div>
-        <div
-                {{ stimulus_controller('modal-form', {formUrl: path('app_collection_new', {'orgId': activeOrgId, 'catId': activeCatId})}) }}
-                data-action="hidden.bs.modal->modal-form#modalHidden"
-        >
-          <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Collection</button>
-          {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Collection'}) }}
+  <div class="align-items-end">
+    <div {{ stimulus_controller('modal-form', {formUrl: path('app_collection_new', {'orgId': activeOrgId, 'catId': activeCatId})}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
+      <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Collection</button>
+      {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Collection'}) }}
+    </div>
+
+    {% for collection in activeCategory.linkCollections %}
+      {% set activeClass = collection.id == activeCollectionId ? "active" : "" %}
+      <div class="row mt-3">
+        <div class="col">
+          <a class="btn btn-outline-info me-2 {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': collection.id}) }}">
+            <span>{{ collection.collectionName }}</span>
+          </a>
         </div>
       </div>
-    </div>
-  </nav>
+    {% endfor %}
+  </div>
 {% endif %}

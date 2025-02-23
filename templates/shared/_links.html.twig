@@ -1,23 +1,44 @@
 {% if activeOrg and activeCategory and activeCollection %}
-  <div
-      {{ stimulus_controller('modal-form', {formUrl: path('app_link_new', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': activeCollectionId })}) }}
-      data-action="hidden.bs.modal->modal-form#modalHidden"
-  >
-    <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Link</button>
-    {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Link'}) }}
-  </div>
+  <script type="text/javascript">
+    function showPass(linkId) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            let eleId = "pass-" + linkId;
+            document.getElementById(eleId).innerHTML = `${this.responseText}<br /><a href="javascript:void(0);" onclick="hidePass(${linkId});">hide</a>`;
+        }
+        xhttp.open("GET", `/link/${linkId}/getLinkPass`, true);
+        xhttp.send();
+    }
 
-  <div class="row">
-    {% for link in activeCollection.link %}
-      <div class="col-lg-2 col-sm-6 mb-3 mb-sm-0">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{ link.Title  }}</h5>
-            <p class="card-text">{{ link.description }}</p>
-            <a href="{{ link.baseUrl }}" class="btn btn-primary" target="_blank">GO!</a>
+    function hidePass(linkId) {
+      let eleId = "pass-" + linkId;
+      document.getElementById(eleId).innerHTML = `<a href="javascript:void(0);" onclick="showPass(${linkId});">show</a>`;
+    }
+  </script>
+  <div class="align-items-end">
+    <div {{ stimulus_controller('modal-form', {formUrl: path('app_link_new', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': activeCollectionId })}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
+      <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Link</button>
+      {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Link'}) }}
+    </div>
+
+    <div class="row">
+      {% for link in activeCollection.link %}
+        <div class="col-sm-6 col-md-3 mb-3 mb-sm-0">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ link.Title  }}</h5>
+              <p class="card-text">{{ link.description }}</p>
+              <p class="card-text">{{ link.siteUsername }}</p>
+              <p class="card-text" id="pass-{{ link.id }}">
+                {% if link.encData %}
+                  <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show</a>
+                {% endif %}
+              </p>
+              <a href="{{ link.baseUrl }}" class="btn btn-primary" target="_blank">GO!</a>
+            </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
 {% endif %}

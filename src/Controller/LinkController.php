@@ -6,8 +6,11 @@ use App\Entity\Link;
 use App\Form\LinkType;
 use App\Repository\LinkCollectionRepository;
 use App\Repository\LinkRepository;
+use App\Service\PasswordManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -24,7 +27,7 @@ final class LinkController extends AbstractController
   }
 
   #[Route('/new', name: 'app_link_new', methods: ['GET', 'POST'])]
-  public function new(Request $request, EntityManagerInterface $entityManager, LinkCollectionRepository $linkCollectionRepository): Response
+  public function new(Request $request, EntityManagerInterface $entityManager, LinkCollectionRepository $linkCollectionRepository, PasswordManager $passwordManager, LoggerInterface $logger): Response
   {
     $link = new Link();
 
@@ -37,6 +40,11 @@ final class LinkController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      if($link->getSitePassword()) {
+        $encData = $passwordManager->encryptPassword($link->getSitePassword());
+        $link->setSitePassword($encData['cipherText']);
+        $link->setEncData($encData);
+      }
       $entityManager->persist($link);
       $entityManager->flush();
 
@@ -94,5 +102,11 @@ final class LinkController extends AbstractController
     }
 
     return $this->redirectToRoute('app_link_index', [], Response::HTTP_SEE_OTHER);
+  }
+
+  #[Route('/{id}/getLinkPass', name: 'app_link_pass', methods: ['GET'])]
+  public function pass(Link $link, PasswordManager $passwordManager): Response
+  {
+    return new Response($passwordManager->decryptPassword($link->getEncData()), Response::HTTP_OK);
   }
 }
