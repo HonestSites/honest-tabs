@@ -1,14 +1,14 @@
 {% if activeOrg and activeCategory %}
   <nav class="navbar navbar-expand bg-body-tertiary shadow">
     <div class="container-fluid">
-      <div class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-start overflow-x-auto">
+      <div class="ms-3 me-3 btn-group ff-bebas align-items-start overflow-x-auto">
         <div {{ stimulus_controller('modal-form', {formUrl: path('app_collection_new', {'orgId': activeOrgId, 'catId': activeCatId})}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
-          <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Collection</button>
+          <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal" style="min-width: 150px;">NEW COLLECTION</button>
           {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Collection'}) }}
         </div>
         {% for collection in activeCategory.linkCollections %}
           {% set activeClass = collection.id == activeCollectionId ? "active" : "" %}
-          <a class="btn btn-outline-success btn-sm {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': collection.id}) }}">
+          <a class="btn btn-outline-success btn-sm ms-1 w-150 {{ activeClass }}" href="{{ path('app_home', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': collection.id}) }}">
             {{ collection.collectionName }}
           </a>
         {% endfor %}

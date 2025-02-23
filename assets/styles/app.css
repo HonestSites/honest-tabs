@@ -1,3 +1,8 @@
 body {
-    background-color: #dae1dc;
+  background-color: #dae1dc;
+}
+
+.w-150 {
+  min-width: 150px !important;
+  max-width: 150px !important;
 }
