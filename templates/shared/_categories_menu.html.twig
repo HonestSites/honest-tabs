@@ -1,0 +1,23 @@
+{% if activeOrg %}
+  <div {{ stimulus_controller('modal-form', {formUrl: path('app_category_new', {'orgId': activeOrgId})}) }}
+      data-action="hidden.bs.modal->modal-form#modalHidden">
+    <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal" style="min-width: 150px;">NEW
+      CATEGORY
+    </button>
+    {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Category'}) }}
+  </div>
+  <label>
+    <select class="form-select" onchange="processCategory(this);">
+      {% for cat in activeOrg.categories %}
+        {% set selected = cat.id == activeCatId ? "selected" : "" %}
+        <option value="{{ cat.id }}" {{ selected }}>{{ cat.categoryName }}</option>
+      {% endfor %}
+    </select>
+  </label>
+{% endif %}
+<script type="text/javascript">
+    function processCategory(me) {
+        let orgId = "{{ activeOrgId }}";
+        window.location.href = `/?orgId=${orgId}&catId=${me.value}`;
+    }
+</script>
