@@ -1,30 +1,25 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-  <div class="container-fluid ms-3">
+<div class="navbar bg-body-tertiary shadow">
+  <div class="container-fluid d-flex">
     <a class="navbar-brand" href="/">
       <img src="{{ asset('build/images/hsLogo.png') }}" alt="Logo" width="150" class="d-inline-block align-text-top">
     </a>
+    <div class="d-none d-sm-block">
+      {% if is_granted('ROLE_USER') %}
+        <div id="nav-section-switch" class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-end">
+          <a class="btn btn-outline-success me-2" href="{{ path('app_organization_index') }}">
+            <span>Organizations</span>
+          </a>
+          <a class="btn btn-outline-success me-2" href="{{ path('app_category_index') }}">
+            <span>Categories</span>
+          </a>
+          <a class="btn btn-outline-success me-2" href="{{ path('app_collection_index') }}">
+            <span>Link Collections</span>
+          </a>
+        </div>
+      {% endif %}
+    </div>
     {% if is_granted('ROLE_USER') %}
-      <div id="nav-section-switch" class="ms-3 ms-lg-5 me-3 me-lg-5 btn-group ff-bebas align-items-end">
-        <a class="btn btn-outline-success me-2" href="{{ path('app_organization_index') }}">
-          <span>Organizations</span>
-        </a>
-        <a class="btn btn-outline-success me-2" href="{{ path('app_category_index') }}">
-          <span>Categories</span>
-        </a>
-        <a class="btn btn-outline-success me-2" href="{{ path('app_collection_index') }}">
-          <span>Link Collections</span>
-        </a>
-      </div>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link py-3 " href="/logout"><i class="me-1 me-lg-2 bi bi-door-open"></i>Logout</a>
-          </li>
-        </ul>
-      </div>
+      <a href="/logout" class="btn btn-outline-info me-2">Logout</a>
     {% endif %}
   </div>
-</nav>
+</div>
