@@ -1,0 +1,19 @@
+<div {{ stimulus_controller('modal-form', {formUrl: path('app_organization_new')}) }}
+    data-action="hidden.bs.modal->modal-form#modalHidden">
+  <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW ORGANIZATION</button>
+  {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Organization'}) }}
+</div>
+<label>
+  <select class="form-select" onchange="processOrg(this);">
+    {% for org in organizations %}
+      {% set orgSelected = org.id == activeOrgId ? "selected" : "" %}
+      <option value="{{ org.id }}" {{ orgSelected }}>{{ org.organizationName }}</option>
+    {% endfor %}
+  </select>
+</label>
+
+<script type="text/javascript">
+    function processOrg(me) {
+        window.location.href = `/?orgId=${me.value}`;
+    }
+</script>

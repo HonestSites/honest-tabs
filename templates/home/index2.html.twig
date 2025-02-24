@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Honest Sites Book Mark Management{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="row bg-white">
+      <div class="col">
+        {% include "shared/_orgs_menu.html.twig" %}
+      </div>
+      <div class="col">
+        {% include "shared/_categories_menu.html.twig" %}
+      </div>
+      <div class="col">
+        {% include "shared/_collections_menu.html.twig" %}
+      </div>
+    </div>
+  </div>
+  <div>
+    {% include "shared/_links.html.twig" %}
+  </div>
+{% endblock %}

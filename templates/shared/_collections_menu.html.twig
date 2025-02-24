@@ -1,0 +1,24 @@
+{% if activeOrg and activeCategory %}
+  <div {{ stimulus_controller('modal-form', {formUrl: path('app_collection_new', {'orgId': activeOrgId, 'catId': activeCatId})}) }}
+      data-action="hidden.bs.modal->modal-form#modalHidden">
+    <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal" style="min-width: 150px;">NEW
+      COLLECTION
+    </button>
+    {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Collection'}) }}
+  </div>
+  <label>
+    <select class="form-select" onchange="processCollection(this);">
+      {% for collection in activeCategory.linkCollections %}
+        {% set collectionSelected = collection.id == activeCollectionId ? "selected" : "" %}
+        <option value="{{ collection.id }}" {{ collectionSelected }}>{{ collection.collectionName }}</option>
+      {% endfor %}
+    </select>
+  </label>
+{% endif %}
+<script type="text/javascript">
+    function processCollection(me) {
+        let orgId = "{{ activeOrgId }}";
+        let catId = "{{ activeCatId }}";
+        window.location.href = `/?orgId=${orgId}&catId=${catId}&collectionId=${me.value}`;
+    }
+</script>
