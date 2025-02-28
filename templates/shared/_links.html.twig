@@ -25,18 +25,22 @@
     <div class="row">
       {% for link in sortedEntities %}
         <div class="col-sm-6 col-md-3 mb-3 mb-sm-0">
-          <div class="card">
+          <div class="card border border-5 border-black min-vh-250">
             <div class="card-body">
               <h5 class="card-title">{{ link.title  }}</h5>
-              <p class="card-text">{{ link.description }}</p>
+              <p class="card-text min-vh-80">{{ link.description }}</p>
               <p class="card-text">
-                {{ link.siteUsername }}
-                <span id="pass-{{ link.id }}">
-                  {% if link.encData %}
-                    /
-                    <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show</a>
-                  {% endif %}
-                </span>
+                {% if link.siteUsername %}
+                  {{ link.siteUsername }}
+                  <span id="pass-{{ link.id }}">
+                    {% if link.encData %}
+                      /
+                      <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show</a>
+                    {% endif %}
+                  </span>
+                {% else %}
+                  &nbsp;
+                {% endif %}
               </p>
               <a href="{{ link.baseUrl }}" class="btn btn-primary" target="_blank">GO!</a>
             </div>
