@@ -18,15 +18,20 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="btn btn-outline-success me-2" href="{{ path('app_organization_index') }}">
-                <span>Organizations</span>
-              </a>
-              <a class="btn btn-outline-success me-2" href="{{ path('app_category_index') }}">
-                <span>Categories</span>
-              </a>
-              <a class="btn btn-outline-success me-2" href="{{ path('app_collection_index') }}">
-                <span>Link Collections</span>
-              </a>
+              {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-outline-success me-2" href="{{ path('app_organization_index') }}">
+                  <span>Organizations</span>
+                </a>
+                <a class="btn btn-outline-success me-2" href="{{ path('app_category_index') }}">
+                  <span>Categories</span>
+                </a>
+                <a class="btn btn-outline-success me-2" href="{{ path('app_collection_index') }}">
+                  <span>Link Collections</span>
+                </a>
+                <a class="btn btn-outline-success me-2" href="{{ path('app_link_index') }}">
+                  <span>Links</span>
+                </a>
+              {% endif %}
               <a class="btn btn-outline-danger me-2" href="{{ path('app_logout') }}">
                 <span>Logout</span>
               </a>

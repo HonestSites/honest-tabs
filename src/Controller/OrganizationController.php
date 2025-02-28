@@ -27,7 +27,7 @@
     {
 
       return $this->render("organization/index.html.twig", [
-        'organizations' => $organizationRepository->findAll(),
+        'organizations' => $organizationRepository->findBy([], ['organizationName' => 'ASC']),
       ]);
     }
 

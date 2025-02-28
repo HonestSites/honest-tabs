@@ -1,4 +1,5 @@
 {% if activeOrg and activeCategory and activeCollection %}
+  {% set sortedEntities = activeCollection.link|sort((a, b) => a.Title <=> b.Title) %}
   <script type="text/javascript">
     function showPass(linkId) {
         const xhttp = new XMLHttpRequest();
@@ -22,7 +23,7 @@
     </div>
 
     <div class="row">
-      {% for link in activeCollection.link %}
+      {% for link in sortedEntities %}
         <div class="col-sm-6 col-md-3 mb-3 mb-sm-0">
           <div class="card">
             <div class="card-body">

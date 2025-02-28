@@ -22,7 +22,7 @@ final class LinkController extends AbstractController
   public function index(LinkRepository $linkRepository): Response
   {
     return $this->render('link/index.html.twig', [
-      'links' => $linkRepository->findAll(),
+      'links' => $linkRepository->findBy([], ['title' => 'ASC']),
     ]);
   }
 
