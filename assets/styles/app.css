@@ -6,3 +6,14 @@ body {
   min-width: 150px !important;
   max-width: 150px !important;
 }
+
+.min-vh-250 {
+  min-height: 250px !important;
+  max-height: 250px !important;
+}
+
+p.min-vh-80 {
+  min-height: 80px !important;
+  max-height: 80px !important;
+  overflow: auto !important;
+}
