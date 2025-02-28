@@ -1,4 +1,5 @@
 {% if activeOrg %}
+  {% set sortedEntities = activeOrg.categories|sort((a, b) => a.categoryName <=> b.categoryName) %}
   <div {{ stimulus_controller('modal-form', {formUrl: path('app_category_new', {'orgId': activeOrgId})}) }}
       data-action="hidden.bs.modal->modal-form#modalHidden">
     <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal" style="min-width: 150px;">NEW
@@ -8,7 +9,7 @@
   </div>
   <label>
     <select class="form-select" onchange="processCategory(this);">
-      {% for cat in activeOrg.categories %}
+      {% for cat in sortedEntities %}
         {% set selected = cat.id == activeCatId ? "selected" : "" %}
         <option value="{{ cat.id }}" {{ selected }}>{{ cat.categoryName }}</option>
       {% endfor %}
