@@ -19,7 +19,7 @@ final class CollectionController extends AbstractController
   public function index(LinkCollectionRepository $linkCollectionRepository): Response
   {
     return $this->render('collection/index.html.twig', [
-      'linkCollections' => $linkCollectionRepository->findAll(),
+      'linkCollections' => $linkCollectionRepository->findBy([], ['collectionName' => 'ASC']),
     ]);
   }
 
