@@ -5,15 +5,15 @@
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
             let eleId = "pass-" + linkId;
-            document.getElementById(eleId).innerHTML = `${this.responseText}<br /><a href="javascript:void(0);" onclick="hidePass(${linkId});">hide</a>`;
+            document.getElementById(eleId).innerHTML = `/ <a href="javascript:void(0);" onclick="hidePass(${linkId});">${this.responseText}</a>`;
         }
-        xhttp.open("GET", `/link/${linkId}/getLinkPass`, true);
+        xhttp.open("GET", `/ajax/${linkId}/getLinkPass`, true);
         xhttp.send();
     }
 
     function hidePass(linkId) {
       let eleId = "pass-" + linkId;
-      document.getElementById(eleId).innerHTML = `<a href="javascript:void(0);" onclick="showPass(${linkId});">show</a>`;
+      document.getElementById(eleId).innerHTML = `/ <a href="javascript:void(0);" onclick="showPass(${linkId});">show</a>`;
     }
   </script>
   <div class="align-items-end">
@@ -27,13 +27,16 @@
         <div class="col-sm-6 col-md-3 mb-3 mb-sm-0">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{ link.Title  }}</h5>
+              <h5 class="card-title">{{ link.title  }}</h5>
               <p class="card-text">{{ link.description }}</p>
-              <p class="card-text">{{ link.siteUsername }}</p>
-              <p class="card-text" id="pass-{{ link.id }}">
-                {% if link.encData %}
-                  <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show</a>
-                {% endif %}
+              <p class="card-text">
+                {{ link.siteUsername }}
+                <span id="pass-{{ link.id }}">
+                  {% if link.encData %}
+                    /
+                    <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show</a>
+                  {% endif %}
+                </span>
               </p>
               <a href="{{ link.baseUrl }}" class="btn btn-primary" target="_blank">GO!</a>
             </div>
