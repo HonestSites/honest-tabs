@@ -83,14 +83,23 @@ final class LinkController extends AbstractController
 
     if ($form->isSubmitted() && $form->isValid()) {
       $entityManager->flush();
+      if ($request->isXmlHttpRequest()) {
+        return new Response(null, 204);
+      }
 
       return $this->redirectToRoute('app_link_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    return $this->render('link/edit.html.twig', [
+    $template = $request->isXmlHttpRequest() ? '_form.html.twig' : 'edit.html.twig';
+
+    return $this->render("link/{$template}", [
       'link' => $link,
-      'form' => $form,
-    ]);
+      'isHttpRequest' => (bool)$request->isXmlHttpRequest(),
+      'form' => $form->createView(),
+    ], new Response(
+      null,
+      $form->isSubmitted() ? 422 : 200
+    ));
   }
 
   #[Route('/{id}', name: 'app_link_delete', methods: ['POST'])]
