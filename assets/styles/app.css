@@ -12,8 +12,8 @@ body {
   max-height: 250px !important;
 }
 
-p.min-vh-80 {
-  min-height: 80px !important;
-  max-height: 80px !important;
+p.min-vh-70 {
+  min-height: 70px !important;
+  max-height: 70px !important;
   overflow: auto !important;
 }
