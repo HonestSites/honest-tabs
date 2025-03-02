@@ -42,7 +42,11 @@
                   &nbsp;
                 {% endif %}
               </p>
-              <a href="{{ link.baseUrl }}" class="btn btn-primary" target="_blank">GO!</a>
+              <div {{ stimulus_controller('modal-form', {formUrl: path('app_link_edit', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': activeCollectionId, 'id': link.id })}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
+                <button class="btn btn-outline-info btn-sm" data-action="modal-form#openModal">EDIT</button>
+                {{ include("shared/_modal.html.twig", {modalTitle: 'EDIT LINK'}) }}
+                <a href="{{ link.baseUrl }}" class="btn btn-primary" target="_blank">GO!</a>
+              </div>
             </div>
           </div>
         </div>
