@@ -1,5 +1,49 @@
+:root {
+  --primary: #282828;
+  --secondary: #f7cb00;
+  --accent-light: #f7e6b3;
+  --accent-dark: #a18500;
+  --neutral-light: #f5f5f5;
+  --neutral-mid: #d9d9d9;
+  --text-primary: var(--primary);
+  --text-secondary: var(--neutral-mid);
+}
+html,
 body {
-  background-color: #dae1dc;
+  height: 100%;
+}
+body {
+  /* background: url("../images/background-grid.svg") no-repeat center center fixed; */
+  background: linear-gradient(to top, #d3cce346, #e9e4f071);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  background-color: var(--accent-light);
+  border-color: var(--accent-dark);
+  color: var(--primary);
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+  background-color: var(--primary);
+  border-color: var(--accent-dark);
+  color: var(--neutral-light);
+}
+
+.btn-secondary {
+  background-color: var(--neutral-mid);
+  border-color: var(--neutral-mid);
+  color: var(--primary);
+}
+
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:focus {
+  background-color: var(--accent-dark);
 }
 
 .w-150 {
