@@ -20,7 +20,7 @@ class Link
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $baseUrl = null;
 
     #[ORM\Column(nullable: true)]
