@@ -18,13 +18,13 @@
   </script>
   <div class="align-items-end">
     <div {{ stimulus_controller('modal-form', {formUrl: path('app_link_new', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': activeCollectionId })}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
-      <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Link</button>
+      <div class="text-center my-3"><button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Link</button></div> 
       {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Link'}) }}
     </div>
-
-    <div class="row">
-      {% for link in sortedEntities %}
-        <div class="col-sm-6 col-md-3 mb-3 mb-sm-0">
+    <div class="container-fluid">
+      <div class="row">
+        {% for link in sortedEntities %}
+          <div class="col-sm-6 col-md-3 mb-3 mb-sm-0">
           <div class="card border border-3 border-black min-vh-250 mb-3">
             <div class="card-body">
               <h5 class="card-title">{{ link.title  }}</h5>

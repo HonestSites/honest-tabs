@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ImportController!{% endblock %}
+
+{% block body %}
+<div>
+    <h1>Select File To Import</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn my-3 btn-success">{{ button_label|default('Upload & Process') }}</button>
+    {{ form_end(form) }}</div>
+{% endblock %}
