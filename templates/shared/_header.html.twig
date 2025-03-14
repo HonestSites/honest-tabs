@@ -1,43 +1,40 @@
-<div class="navbar bg-body-tertiary shadow">
-  <div class="container-fluid d-flex">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <img src="{{ asset('build/images/hsLogo.png') }}" alt="Logo" width="150" class="d-inline-block align-text-top">
     </a>
-      {% if is_granted('ROLE_USER') %}
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              {% if is_granted('ROLE_ADMIN') %}
-                <a class="btn btn-outline-success me-2" href="{{ path('app_organization_index') }}">
-                  <span>Organizations</span>
-                </a>
-                <a class="btn btn-outline-success me-2" href="{{ path('app_category_index') }}">
-                  <span>Categories</span>
-                </a>
-                <a class="btn btn-outline-success me-2" href="{{ path('app_collection_index') }}">
-                  <span>Link Collections</span>
-                </a>
-                <a class="btn btn-outline-success me-2" href="{{ path('app_link_index') }}">
-                  <span>Links</span>
-                </a>
-              {% endif %}
-              <a class="btn btn-outline-danger me-2" href="{{ path('app_logout') }}">
-                <span>Logout</span>
+    {% if is_granted('ROLE_USER') %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Import
+            </a>
+            <ul class="dropdown-menu">
+              <a class="dropdown-item" href="{{ path('app_import_bitwarden') }}">BitWarden</a>
+            </ul>
+          </li>
+          {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Admin
               </a>
+              <ul class="dropdown-menu">
+                <a class="dropdown-item" href="{{ path('app_organization_index') }}">Organizations</a>
+                <a class="dropdown-item" href="{{ path('app_category_index') }}">Categories</a>
+                <a class="dropdown-item" href="{{ path('app_collection_index') }}">Link Collections</a>
+                <a class="dropdown-item" href="{{ path('app_link_index') }}">Links</a>
+              </ul>
             </li>
-          </ul>
-        </div>
-      {% endif %}
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_logout') }}">Logoff</a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
   </div>
-</div>
+</nav>

@@ -30,4 +30,15 @@
     {
       return $this->findOneBy(['id' => $orgId, 'owner' => $this->authManager->getUser()]);
     }
+
+    public function save($organization)
+    {
+      try {
+        $this->getEntityManager()->persist($organization);
+        $this->getEntityManager()->flush();
+      } catch (\Exception $e) {
+        $organization = null;
+      }
+      return $organization;
+    }
   }

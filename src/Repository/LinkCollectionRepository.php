@@ -11,33 +11,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LinkCollectionRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, LinkCollection::class);
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, LinkCollection::class);
+  }
+
+  public function save($collection)
+  {
+    try {
+      $this->getEntityManager()->persist($collection);
+      $this->getEntityManager()->flush();
+    } catch (\Exception $e) {
+      $collection = null;
     }
+    return $collection;
+  }
 
-    //    /**
-    //     * @return LinkCollection[] Returns an array of LinkCollection objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('l')
-    //            ->andWhere('l.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('l.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?LinkCollection
-    //    {
-    //        return $this->createQueryBuilder('l')
-    //            ->andWhere('l.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

@@ -15,4 +15,16 @@ class CategoryRepository extends ServiceEntityRepository
   {
     parent::__construct($registry, Category::class);
   }
+
+  public function save($category)
+  {
+    try {
+      $this->getEntityManager()->persist($category);
+      $this->getEntityManager()->flush();
+    } catch (\Exception $e) {
+      $category = null;
+    }
+    return $category;
+  }
+
 }
