@@ -18,6 +18,7 @@ class LinkType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $collectionData = $options['data']->getLinkCollection();
+    $categoryId = $collectionData->getCategory()->getId();
 
     $builder
       ->add('title', null, [
@@ -40,12 +41,12 @@ class LinkType extends AbstractType
         'attr' => ['class' => 'form-control'],
         'class' => LinkCollection::class,
         'choice_label' => 'collectionName',
-        'query_builder' => function (EntityRepository $er) use ($collectionData): QueryBuilder {
+        'query_builder' => function (EntityRepository $er) use ($categoryId): QueryBuilder {
           return $er->createQueryBuilder('lc')
             ->where('lc.active = :active')
-            ->andWhere('lc.id = :collectionId')
+            ->andWhere('lc.category = :categoryId')
             ->setParameter('active', true)
-            ->setParameter('collectionId', $collectionData ? $collectionData->getId() : null)
+            ->setParameter('categoryId', $categoryId ?? null)
             ->orderBy('lc.collectionName', 'ASC');
         },
       ])
