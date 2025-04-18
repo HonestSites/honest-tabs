@@ -1,23 +1,32 @@
 {% if activeOrg and activeCategory %}
   {% set sortedEntities = activeCategory.linkCollections|sort((a, b) => a.collectionName <=> b.collectionName) %}
 
-  <div {{ stimulus_controller('modal-form', {formUrl: path('app_collection_new', {'orgId': activeOrgId, 'catId': activeCatId})}) }}
-      data-action="hidden.bs.modal->modal-form#modalHidden">
-    <div class="mt-3">
-      <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal" style="min-width: 150px;">NEW
-        COLLECTION
-    </button>
-    {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Collection'}) }}
+  <div class="row container-fluid">
+    <div class="col mt-3">
+      <div {{ stimulus_controller('modal-form', {formUrl: path('app_collection_new', {'orgId': activeOrgId, 'catId': activeCatId})}) }}
+        data-action="hidden.bs.modal->modal-form#modalHidden">
+        <div>
+          <button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal" style="min-width: 150px;">NEW
+            COLLECTION
+          </button>
+          {{ include("shared/_modal.html.twig", {modalTitle: 'Create a new Collection'}) }}
+        </div>
+      </div>
+    </div>
+    <div class="col mt-3">
+      <a href="{{ path('app_collection_index', { 'categoryId': activeCatId }) }}" class="btn btn-outline-secondary btn-sm">ADMINISTER</a>
+    </div>
+    <div class="row">
+      <label class="my-2">
+        <select class="form-select" onchange="processCollection(this);">
+          {% for collection in sortedEntities %}
+            {% set collectionSelected = collection.id == activeCollectionId ? "selected" : "" %}
+            <option value="{{ collection.id }}" {{ collectionSelected }}>{{ collection.collectionName }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
   </div>
-  <label class="my-2">
-    <select class="form-select" onchange="processCollection(this);">
-      {% for collection in sortedEntities %}
-        {% set collectionSelected = collection.id == activeCollectionId ? "selected" : "" %}
-        <option value="{{ collection.id }}" {{ collectionSelected }}>{{ collection.collectionName }}</option>
-      {% endfor %}
-    </select>
-  </label>
-</div>
 {% endif %}
 <script type="text/javascript">
     function processCollection(me) {
