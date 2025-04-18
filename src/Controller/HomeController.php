@@ -27,6 +27,21 @@
     #[Route('/', name: 'app_home')]
     public function index(Request $request): Response
     {
+      if ( $request->query->get('orgId') ) {
+        AppSession::clearSessionData('activeOrgId');
+        AppSession::clearSessionData('activeCatId');
+        AppSession::clearSessionData('activeColletionId');
+      }
+
+      if ( $request->query->get('catId') ) {
+        AppSession::clearSessionData('activeCatId');
+        AppSession::clearSessionData('activeColletionId');
+      }
+
+      if ( $request->query->get('collectionId') ) {
+        AppSession::clearSessionData('activeColletionId');
+      }
+
       $activeOrgId = $request->query->get('orgId') ?? AppSession::getSessionData('activeOrgId');
       $activeCatId = $request->query->get('catId') ?? AppSession::getSessionData('activeCatId');
       $activeCollectionId = $request->query->get('collectionId') ?? AppSession::getSessionData('activeCollectionId');
