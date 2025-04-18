@@ -27,7 +27,7 @@
           </tbody>
         </table>
 
-        {% include 'common/_back_link.html.twig' with {'pathName': globalData.backPathName, 'areaName': globalData.areaName } %}
+{#        {% include 'common/_back_link.html.twig' with {'pathName': globalData.backPathName, 'areaName': globalData.areaName } %}#}
         {% include 'common/_edit_link.html.twig' with {'pathName': globalData.editPathName, 'recordId':recordId, 'areaName': globalData.areaName } %}
         {% include 'common/_delete_link.html.twig' with {'pathName': globalData.deletePathName, 'recordId':recordId, 'areaName': globalData.areaName } %}
       </div>

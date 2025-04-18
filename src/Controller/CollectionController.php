@@ -15,11 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/collection')]
 final class CollectionController extends AbstractController
 {
-  #[Route(name: 'app_collection_index', methods: ['GET'])]
-  public function index(LinkCollectionRepository $linkCollectionRepository): Response
+  #[Route('/{categoryId}/admin', name: 'app_collection_index', methods: ['GET'])]
+  public function index(LinkCollectionRepository $linkCollectionRepository, $categoryId): Response
   {
+    $linkCollections = $linkCollectionRepository->getOwnedByCategory($categoryId);
     return $this->render('collection/index.html.twig', [
-      'linkCollections' => $linkCollectionRepository->findBy([], ['collectionName' => 'ASC']),
+      'linkCollections' => $linkCollections,
     ]);
   }
 
@@ -61,7 +62,7 @@ final class CollectionController extends AbstractController
 
   }
 
-  #[Route('/{id}', name: 'app_collection_show', methods: ['GET'])]
+  #[Route('/{id}/show', name: 'app_collection_show', methods: ['GET'])]
   public function show(LinkCollection $linkCollection): Response
   {
     return $this->render('collection/show.html.twig', [
@@ -90,11 +91,12 @@ final class CollectionController extends AbstractController
   #[Route('/{id}', name: 'app_collection_delete', methods: ['POST'])]
   public function delete(Request $request, LinkCollection $linkCollection, EntityManagerInterface $entityManager): Response
   {
+    $lcId = $linkCollection->getCategory()->getId();
     if ($this->isCsrfTokenValid('delete' . $linkCollection->getId(), $request->getPayload()->getString('_token'))) {
       $entityManager->remove($linkCollection);
       $entityManager->flush();
     }
 
-    return $this->redirectToRoute('app_collection_index', [], Response::HTTP_SEE_OTHER);
+    return $this->redirectToRoute('app_collection_index', ['categoryId' => $lcId], Response::HTTP_SEE_OTHER);
   }
 }
