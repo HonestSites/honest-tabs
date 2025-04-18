@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\LinkCollection;
 use App\Form\LinkCollectionType;
+use App\Lib\AppSession;
 use App\Repository\CategoryRepository;
 use App\Repository\LinkCollectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,7 +30,7 @@ final class CollectionController extends AbstractController
   {
     $linkCollection = new LinkCollection();
 
-    $categoryId = $request->query->get('catId');
+    $categoryId = AppSession::getSessionData('activeCatId');
     $category = $categoryId ? $categoryRepository->findOneById($categoryId) : null;
     $linkCollection->setCategory($category);
 

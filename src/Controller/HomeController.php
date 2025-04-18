@@ -3,6 +3,7 @@
   namespace App\Controller;
 
   use App\Form\OrganizationSelectType;
+  use App\Lib\AppSession;
   use App\Repository\CategoryRepository;
   use App\Repository\LinkCollectionRepository;
   use App\Repository\LinkRepository;
@@ -26,9 +27,9 @@
     #[Route('/', name: 'app_home')]
     public function index(Request $request): Response
     {
-      $activeOrgId = $request->query->get('orgId');
-      $activeCatId = $request->query->get('catId');
-      $activeCollectionId = $request->query->get('collectionId');
+      $activeOrgId = $request->query->get('orgId') ?? AppSession::getSessionData('activeOrgId');
+      $activeCatId = $request->query->get('catId') ?? AppSession::getSessionData('activeCatId');
+      $activeCollectionId = $request->query->get('collectionId') ?? AppSession::getSessionData('activeCollectionId');
       $activeLinkId = $request->query->get('linkId');
 
       $orgs = $this->organizationRepository->getMyOrganizations();
@@ -58,6 +59,10 @@
       if($activeCatId) {
         $activeCategory = $this->categoryRepository->findOneById($activeCatId);
       }
+
+      AppSession::setSessionData('activeOrgId', $activeOrgId);
+      AppSession::setSessionData('activeCatId', $activeCatId);
+      AppSession::setSessionData('activeCollectionId', $activeCollectionId);
 
       // get Active Link Collection data
       if(! $activeCollectionId && $activeCategory) {
@@ -95,7 +100,8 @@
         'activeCatId' => $activeCatId,
         'activeLinkId' => $activeLinkId,
         'activeCollectionId' => $activeCollectionId,
-      ]);    }
+      ]);
+    }
 
 
 
@@ -161,7 +167,7 @@
         $activeLink = $this->linkRepository->findOneById($activeLinkId);
       }
 
-      return $this->render('home/index.html.twig', [
+      return $this->render('home/index2.html.twig', [
         'organizations' => $orgs,
         'activeOrg' => $activeOrg,
         'activeCategory' => $activeCategory,
