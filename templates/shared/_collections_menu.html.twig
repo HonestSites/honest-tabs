@@ -30,8 +30,6 @@
 {% endif %}
 <script type="text/javascript">
     function processCollection(me) {
-        let orgId = "{{ activeOrgId }}";
-        let catId = "{{ activeCatId }}";
-        window.location.href = `/?orgId=${orgId}&catId=${catId}&collectionId=${me.value}`;
+        window.location.href = `/?collectionId=${me.value}`;
     }
 </script>

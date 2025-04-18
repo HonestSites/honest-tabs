@@ -40,6 +40,7 @@ class LinkCollectionRepository extends ServiceEntityRepository
 
     return $results;
   }
+
   public function save($collection)
   {
     try {

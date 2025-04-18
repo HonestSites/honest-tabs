@@ -4,6 +4,7 @@
 
   use App\Entity\Category;
   use App\Entity\Organization;
+  use App\Service\AuthenticationManager;
   use Doctrine\ORM\EntityRepository;
   use Doctrine\ORM\QueryBuilder;
   use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,6 +14,10 @@
 
   class CategoryType extends AbstractType
   {
+
+    public function __construct(private readonly AuthenticationManager $authManager)
+    {}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
       $builder
@@ -26,7 +31,9 @@
           'query_builder' => function (EntityRepository $er): QueryBuilder {
             return $er->createQueryBuilder('o')
               ->where('o.active = :active')
+              ->andWhere('o.owner = :owner')
               ->setParameter('active', true)
+              ->setParameter('owner', $this->authManager->getUser())
               ->orderBy('o.organizationName', 'ASC');
           },
         ])
