@@ -30,16 +30,16 @@
       if ( $request->query->get('orgId') ) {
         AppSession::clearSessionData('activeOrgId');
         AppSession::clearSessionData('activeCatId');
-        AppSession::clearSessionData('activeColletionId');
+        AppSession::clearSessionData('activeCollectionId');
       }
 
       if ( $request->query->get('catId') ) {
         AppSession::clearSessionData('activeCatId');
-        AppSession::clearSessionData('activeColletionId');
+        AppSession::clearSessionData('activeCollectionId');
       }
 
       if ( $request->query->get('collectionId') ) {
-        AppSession::clearSessionData('activeColletionId');
+        AppSession::clearSessionData('activeCollectionId');
       }
 
       $activeOrgId = $request->query->get('orgId') ?? AppSession::getSessionData('activeOrgId');
