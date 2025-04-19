@@ -75,10 +75,6 @@
         $activeCategory = $this->categoryRepository->findOneById($activeCatId);
       }
 
-      AppSession::setSessionData('activeOrgId', $activeOrgId);
-      AppSession::setSessionData('activeCatId', $activeCatId);
-      AppSession::setSessionData('activeCollectionId', $activeCollectionId);
-
       // get Active Link Collection data
       if(! $activeCollectionId && $activeCategory) {
         foreach ($activeCategory->getLinkCollections() as $collectionLink) {
@@ -104,6 +100,10 @@
       if($activeLinkId) {
         $activeLink = $this->linkRepository->findOneById($activeLinkId);
       }
+
+      AppSession::setSessionData('activeOrgId', $activeOrgId);
+      AppSession::setSessionData('activeCatId', $activeCatId);
+      AppSession::setSessionData('activeCollectionId', $activeCollectionId);
 
       return $this->render('home/index2.html.twig', [
         'organizations' => $orgs,
