@@ -1,21 +1,5 @@
 {% if activeOrg and activeCategory and activeCollection %}
   {% set sortedEntities = activeCollection.link|sort((a, b) => a.Title <=> b.Title) %}
-  <script type="text/javascript">
-    function showPass(linkId) {
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = function() {
-            let eleId = "pass-" + linkId;
-            document.getElementById(eleId).innerHTML = `/ <a href="javascript:void(0);" onclick="hidePass(${linkId});">${this.responseText}</a>`;
-        }
-        xhttp.open("GET", `/ajax/${linkId}/getLinkPass`, true);
-        xhttp.send();
-    }
-
-    function hidePass(linkId) {
-      let eleId = "pass-" + linkId;
-      document.getElementById(eleId).innerHTML = `/ <a href="javascript:void(0);" onclick="showPass(${linkId});">show</a>`;
-    }
-  </script>
   <div class="align-items-end">
     <div {{ stimulus_controller('modal-form', {formUrl: path('app_link_new', {'orgId': activeOrgId, 'catId': activeCatId, 'collectionId': activeCollectionId })}) }} data-action="hidden.bs.modal->modal-form#modalHidden">
       <div class="text-center my-3"><button class="btn btn-outline-danger btn-sm" data-action="modal-form#openModal">NEW Link</button></div> 
@@ -38,6 +22,11 @@
                       <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show</a>
                     {% endif %}
                   </span>
+                  {% if link.encData %}
+                    /
+                    <a href="javascript:void(0);" onclick="copyPass({{ link.id }});">copy</a>
+                  {% endif %}
+
                 {% else %}
                   &nbsp;
                 {% endif %}

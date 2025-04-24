@@ -63,10 +63,13 @@ Encore
   .copyFiles({
     from: './assets/images',
     to: 'images/[path][name].[hash:8].[ext]'
-  }, {
-    from: './assets/favicon.ico',
-    to: './public/'
   })
+
+  .copyFiles({
+    from: './assets/js',
+    to: 'js/[path][name].[hash:8].[ext]'
+  })
+
   .configureWatchOptions(watchOptions => {
     watchOptions.poll = 250;
     watchOptions.ignored = /node_modules/;
