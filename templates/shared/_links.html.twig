@@ -15,11 +15,11 @@
               <p class="card-text min-vh-70">{{ link.description|replace({'\r\n':'<br />'})|raw }}</p>
               <p class="card-text">
                 {% if link.siteUsername %}
-                  {{ link.siteUsername }}
+                  {{ link.siteUsername }} / <a href="javascript:void(0);" onclick="copyText('{{ link.siteUsername }}');">copy username</a>
+                  <br />
                   <span id="pass-{{ link.id }}">
                     {% if link.encData %}
-                      /
-                      <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show</a>
+                      <a href="javascript:void(0);" onclick="showPass({{ link.id }});">show password</a>
                     {% endif %}
                   </span>
                   {% if link.encData %}
