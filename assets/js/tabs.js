@@ -20,6 +20,11 @@ function getPass(linkId)
     });
 }
 
+async function copyText(text)
+{
+    await navigator.clipboard.writeText(text);
+}
+
 async function copyPass(linkId)
 {
     let pass = await getPass(linkId);
@@ -29,10 +34,10 @@ async function copyPass(linkId)
 async function showPass(linkId) {
     let pass = await getPass(linkId);
     let eleId = "pass-" + linkId;
-    document.getElementById(eleId).innerHTML = `/ <a href="javascript:void(0);" onclick="hidePass(${linkId});">${pass}</a>`;
+    document.getElementById(eleId).innerHTML = `<a href="javascript:void(0);" onclick="hidePass(${linkId});">${pass}</a>`;
 }
 
 function hidePass(linkId) {
     let eleId = "pass-" + linkId;
-    document.getElementById(eleId).innerHTML = `/ <a href="javascript:void(0);" onclick="showPass(${linkId});">show</a>`;
+    document.getElementById(eleId).innerHTML = `<a href="javascript:void(0);" onclick="showPass(${linkId});">show password</a>`;
 }
